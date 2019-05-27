@@ -28,7 +28,7 @@ cc.Class({
     canvas.on(cc.Node.EventType.TOUCH_CANCEL, this._onTouchCancel, this);
   },
   loadRes() {
-    
+
   },
   init() {
 
@@ -73,7 +73,7 @@ cc.Class({
   },
 
   onPlayerCollision(other, self) {
-    if (this.playerStatus = 2) {
+    if (this.playerStatus == 1) {
       switch (other.node.group) {
         case 'target':
           if (this.checkIsBig(this.player, other.node)) {
@@ -123,19 +123,7 @@ cc.Class({
     }
   },
   initGameLevel() {
-    this.progress = 1
-    this.initTarget(this.levelData.json[this.level - 1].progress[this.progress - 1])
-    this.initGamePos()
-  },
-  progressUp() {
-    // 每个关卡的进程
-    console.log(this.level, this.progress)
-    if (this.progress == this.levelData.json[this.level - 1].progress.length) {
-      this.onLevelSuccess()
-      return
-    }
-    this.progress++
-    this.initTarget(this.levelData.json[this.level - 1].progress[this.progress - 1])
+    this.initTarget(0)
     this.initGamePos()
   },
   onLevelSuccess() {
@@ -143,7 +131,7 @@ cc.Class({
   },
   initTarget(type) {
     this.target.width = this.target.height = 100 * (Math.random() * 1.5 + 0.5)
-    this.gapWeight = 100 * (Math.random() * 1.5 + 0.005 * (100 - this.level - this.progress)) + this.target.width
+    this.gapWeight = 100 * (Math.random() * 1.5 + 0.005 * (100 - this.level)) + this.target.width
   },
   levelUp() {
     this.operateDialog(4, 0)
@@ -169,7 +157,7 @@ cc.Class({
     this.gap.runAction(gapAction)
   },
   gameOver() {
-    if (this.status == 1) {
+    if (this.status == 1 && this.playerStatus == 1) {
       this.status = 2
       this.playerStatus = 3
       this.operateDialog(2, 1)
@@ -179,10 +167,18 @@ cc.Class({
   successPunch() {
     this.playerStatus = 2
     let action = cc.moveBy(0.1, 0, window.winSize.height / 2 + this.target.height)
-    let sq = cc.sequence(action, cc.callFunc(() => {
-      this.progressUp()
-    }))
-    this.target.runAction(sq)
+    if (this.isSuccess()) {
+      this.onLevelSuccess()
+    } else {
+      this.target.runAction(cc.sequence(action, cc.callFunc(() => {
+        this.initTarget(0)
+        this.initGamePos()
+      })))
+    }
+
+  },
+  isSuccess() {
+    return false
   },
   // -------------- 页面更换 -------------------
   /**
@@ -205,11 +201,9 @@ cc.Class({
     target.runAction(action)
   },
   openDialogBtn(e, d) {
-    console.log(+d)
     this.operateDialog(+d, 1)
   },
   closeDialogBtn(e, d) {
-    console.log(+d)
     this.operateDialog(+d, 0)
   },
   showStartPage() {

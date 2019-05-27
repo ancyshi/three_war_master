@@ -19,6 +19,7 @@ let PlayerData = {
     let initPlayerData = {
       level: 1,
       atk: 1,
+      blood:10,
       character: [{
         level: 1,
         have: true

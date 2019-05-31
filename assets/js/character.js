@@ -1,21 +1,33 @@
 cc.Class({
-  extends: cc.Component,
+	extends: cc.Component,
 
-  properties: {
-    controller: require('game')
-  },
+	properties: {
+		sprite: cc.Sprite
+	},
 
-  // LIFE-CYCLE CALLBACKS:
+	// LIFE-CYCLE CALLBACKS:
 
-  // onLoad () {},
-  init(g, data) {
-    this._game = g
-  },
-  start() {
+	// onLoad () {},
+	init(g, data) {
+		this._game = g
+		this.data = data
+		this.isHave = g.PD.characters.some(item => {
+			item == data.number
+		})
+	},
+	start() {
 
-  },
-  onChoose() {
-    //this._game.
-  },
-  // update (dt) {},
+	},
+	closeChoose() {
+		this.getChildByName('choose').active = false
+		this.getChildByName('choosebg').active = false
+	},
+	openChoose() {
+		this.getChildByName('choose').active = true
+		this.getChildByName('choosebg').active = true
+	},
+	chooseCharacter() {
+		this.game.switchCharacter(this.data.number)
+	},
+	// update (dt) {},
 });

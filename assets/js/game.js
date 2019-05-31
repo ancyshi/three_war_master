@@ -10,6 +10,7 @@ cc.Class({
 		player: cc.Node,
 		target: cc.Node,
 		gap: cc.Node,
+		UI:cc.Node,
 		config: cc.JsonAsset,
 		levelData: cc.JsonAsset,
 		characterPrefab: cc.Prefab,
@@ -26,9 +27,10 @@ cc.Class({
 		canvas.on(cc.Node.EventType.TOUCH_START, this._onTouchBegin, this);
 		canvas.on(cc.Node.EventType.TOUCH_END, this._onTouchEnd, this);
 		canvas.on(cc.Node.EventType.TOUCH_CANCEL, this._onTouchCancel, this);
+		this.loadRes()
 	},
 	loadRes() {
-
+	//	this.chain=this.UI.getChildByName('chain').getComponent('chain')
 	},
 	init() {
 
@@ -98,22 +100,28 @@ cc.Class({
 	// -------------- UI动态渲染 ----------------
 	showCharacter() {
 		let characterData = this.characterConfig.json
-		characterData.map((item, index) => {
+		characterData.map((item) => {
 			let character = cc.instantiate(this.characterPrefab)
 			character.getComponent('character').init(this, item)
 		})
 	},
 	//动态切换角色
+	unlockCharacter(num) {
+		
+	},
 	switchCharacter(num) {
 
+	},
+	chooseCharacter(num) {
+		let data = this.characterConfig.json[+num]
+		this.player.getChildByName('sprite').getComponent(cc.Sprite).spriteFrame = ''
 	},
 	// -------------- 游戏进程 -------------------
 	gameStart() {
 		this.status = 1
 		this.playerStatus = 2
 		this.initGameLevel()
-		this.operateDialog(0, 0)
-		this.operateDialog(1, 1)
+		this.showPage(1)
 	},
 	gameRestart() {
 		if (this.status = 2) {
@@ -174,6 +182,7 @@ cc.Class({
 			this.target.runAction(cc.sequence(action, cc.callFunc(() => {
 				this.initTarget(0)
 				this.initGamePos()
+				this.chain.addChain(this)
 			})))
 		}
 
@@ -181,6 +190,7 @@ cc.Class({
 	isSuccess() {
 		return false
 	},
+
 	// -------------- 页面更换 -------------------
 	/**
 	 * 操作弹框
@@ -197,7 +207,9 @@ cc.Class({
 			target.active = true
 			action = AC.popOut(0.5)
 		} else {
-			action = AC.popIn(0.5)
+			action = cc.sequence(AC.popIn(0.5), cc.callFunc(() => {
+				target.active = false
+			}))
 		}
 		target.runAction(action)
 	},
@@ -220,7 +232,7 @@ cc.Class({
 			this.operateDialog(i, 0)
 		}
 	},
-	//--------------- 实现方放 -----------------
+	//--------------- 实现方法 -----------------
 	playerRush() {
 		this.player.y += 20 * (this.player.scale - 1) * 0.5 + 40
 	},

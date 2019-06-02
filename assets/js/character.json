@@ -1,9 +1,33 @@
-[
+[{
+    "number": 0,
+    "name": "刘备",
+    "skill": 0,
+    "skillNum": 1,
+    "skillDes": "获取一个护盾"
+  },
   {
-		"number":0,
-    "name":"刘备",
-    "skill":0,
-    "skillNum":1,
-    "skillDes":"获取一个护盾"
+    "number": 1,
+    "name": "刘备",
+    "skill": 0,
+    "skillNum": 1,
+    "skillDes": "获取一个护盾"
+  }, {
+    "number": 2,
+    "name": "刘备",
+    "skill": 0,
+    "skillNum": 1,
+    "skillDes": "获取一个护盾"
+  }, {
+    "number": 3,
+    "name": "刘备",
+    "skill": 0,
+    "skillNum": 1,
+    "skillDes": "获取一个护盾"
+  }, {
+    "number": 4,
+    "name": "刘备",
+    "skill": 0,
+    "skillNum": 1,
+    "skillDes": "获取一个护盾"
   }
 ]

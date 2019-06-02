@@ -22,16 +22,13 @@
     "TiledMap",
     "Spine Skeleton",
     "DragonBones",
-    "ProgressBar",
     "ScrollBar",
-    "ScrollView",
     "PageView",
     "PageViewIndicator",
     "Slider",
     "VideoPlayer",
     "WebView",
-    "Physics",
-    "NodePool"
+    "Physics"
   ],
   "facebook": {
     "appID": "",
@@ -50,7 +47,7 @@
     "target",
     "gap"
   ],
-  "last-module-event-record-time": 1558088294495,
+  "last-module-event-record-time": 1559442983441,
   "simulator-orientation": false,
   "simulator-resolution": {
     "height": 640,

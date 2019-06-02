@@ -1,6 +1,6 @@
-var utils = require('utils.js')
-var AC = require('action.js')
-var playerData = require('playerData.js')
+var utils = require('utils')
+var AC = require('action')
+var playerData = require('playerData')
 cc.Class({
   extends: cc.Component,
 

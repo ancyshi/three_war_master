@@ -1,3 +1,11 @@
-{
-  
-}
+[
+	{
+		"num":0,
+		"name":"吕布",
+		"blood":10,
+		"speedX":0,
+		"speedY":0,
+		"accX":0,
+		"accY":0
+	}
+]

@@ -9,6 +9,7 @@ cc.Class({
 	// --------------- 连击系统 -------------------
 	addChain(g) {
 		this.chain += 1
+		console.log(this.chain)
 		this.showChain()
 		if (this.chainTimer) {
 			clearTimeout(this.chainTimer)
@@ -25,7 +26,7 @@ cc.Class({
 		}
 	},
 	endChain() {
-		this.chain += 0
+		this.chain = 0
 		this.node.active = false
 		this.chainNode.active = false
 	},

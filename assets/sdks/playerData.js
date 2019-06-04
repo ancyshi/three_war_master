@@ -53,9 +53,9 @@ let PlayerData = {
 			characters: [], //对应的是否拥有角色
 		}
 		if (isWeChat) {
-			return cc.sys.localStorage.getItem('isFirst') ? JSON.parse(wx.getStorageSync(key)) : initPlayerData
+			return wx.getStorageSync('isFirst') ?JSON.parse(wx.getStorageSync(key))  : initPlayerData
 		} else {
-			return wx.getStorageSync('isFirst') ? JSON.parse(cc.sys.localStorage.getItem(key)) : initPlayerData
+			return cc.sys.localStorage.getItem('isFirst') ?JSON.parse(cc.sys.localStorage.getItem(key))  : initPlayerData
 		}
 	},
 

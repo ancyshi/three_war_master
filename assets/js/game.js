@@ -31,7 +31,7 @@ cc.Class({
 		this.loadRes()
 	},
 	loadRes() {
-		//	this.chain=this.UI.getChildByName('chain').getComponent('chain')
+			this.chain=this.UI.getChildByName('chain').getComponent('chain')
 	},
 	init() {
 

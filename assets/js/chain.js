@@ -7,7 +7,7 @@ cc.Class({
 		chain:0
 	},
 	// --------------- 连击系统 -------------------
-	addChain(g) {
+	addChain() {
 		this.chain += 1
 		this.chainLabel.string=this.chain
 		console.log(this.chain)

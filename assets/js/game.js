@@ -10,7 +10,7 @@ cc.Class({
 		player: cc.Node,
 		target: cc.Node,
 		gap: cc.Node,
-		UI: cc.Node,
+		UI: require('UI'),
 		config: cc.JsonAsset,
 		levelData: cc.JsonAsset,
 		characterPrefab: cc.Prefab,
@@ -28,10 +28,11 @@ cc.Class({
 		canvas.on(cc.Node.EventType.TOUCH_START, this._onTouchBegin, this);
 		canvas.on(cc.Node.EventType.TOUCH_END, this._onTouchEnd, this);
 		canvas.on(cc.Node.EventType.TOUCH_CANCEL, this._onTouchCancel, this);
+		this.UI.init(this)
 		this.loadRes()
 	},
 	loadRes() {
-			this.chain=this.UI.getChildByName('chain').getComponent('chain')
+
 	},
 	init() {
 
@@ -196,7 +197,7 @@ cc.Class({
 			this.target.runAction(cc.sequence(action, cc.callFunc(() => {
 				this.initTarget(0)
 				this.initGamePos()
-				this.chain.addChain(this)
+				this.UI.addChain()
 			})))
 		}
 	},
@@ -248,7 +249,7 @@ cc.Class({
 	},
 	//--------------- 实现方法 -----------------
 	playerRush() {
-		this.player.y += 20 * (this.player.scale - 1) * 0.5 + 40
+		this.player.y += 20 * (this.player.scale - 1) * 0.5 * this.config.animationSpeed + 40
 	},
 	playerBack() {
 		if (this.playerGetBigger) {

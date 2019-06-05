@@ -2,8 +2,8 @@
   "playerOriginPos": 200,
   "targetOriginPos": 150,
   "gapOriginPos": 350,
-  "increaseMultiple": 1,
+  "increaseMultiple": 0.8,
   "reduceMultiple": 1,
-  "maxScale": 6,
-  "animationSpeed": 1
+  "maxScale": 4,
+  "animationSpeed": 1.5
 }

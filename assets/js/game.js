@@ -13,9 +13,7 @@ cc.Class({
 		UI: require('UI'),
 		config: cc.JsonAsset,
 		levelData: cc.JsonAsset,
-		characterPrefab: cc.Prefab,
-		characterConfig: cc.JsonAsset,
-		characterSF: [cc.SpriteFrame],
+
 	},
 	// ------------- 生命周期和触摸事件 ------------------
 	level: 0,
@@ -46,9 +44,9 @@ cc.Class({
 	loadData() {
 		this.PD = playerData.loadData() //获取存档数据
 		console.log(this.PD)
+		this.dialogs[3].getComponent('choosePage').init(this)
+		this.UI.updateAllUI()
 		// todo :页面数据绑定 金币 关卡数
-		this.showCharacter()
-		this.switchCharacter()
 	},
 	_onTouchBegin(event) {
 		if (this.playerStatus == 2 && this.status == 1) {
@@ -81,7 +79,9 @@ cc.Class({
 			}
 		}
 	},
-
+	chooseCharacter(sf){
+		this.player.getChildByName('sprite').getComponent(cc.Sprite).spriteFrame = sf
+	},
 	onPlayerCollision(other, self) {
 		if (this.playerStatus == 1) {
 			switch (other.node.group) {
@@ -105,36 +105,15 @@ cc.Class({
 	checkAkt() {
 		// 用于制作怪物血量
 	},
-	// -------------- 选择角色页面 ----------------
-	showCharacter() {
-		let characterData = this.characterConfig.json
-		characterData.map((item) => {
-			let character = cc.instantiate(this.characterPrefab)
-			character.parent = this.dialogs[3].getChildByName('scrollview').getChildByName('view').getChildByName('container')
-			character.getComponent('character').init(this, item)
-		})
-	},
-	//动态切换角色
-	unlockCharacter(num) {
 
-	},
-	switchCharacter(num, sf) {
-		num = num || 0
-		sf = sf || this.characterSF[0]
-		this.PD.character = num //用来判断技能
-		this.dialogs[3].getChildByName('player').getComponent(cc.Sprite).spriteFrame = sf
-		this.player.getChildByName('sprite').getComponent(cc.Sprite).spriteFrame = sf
-	},
-	chooseCharacter(num) {
-		let data = this.characterConfig.json[+num]
-		this.player.getChildByName('sprite').getComponent(cc.Sprite).spriteFrame = ''
-	},
+
 	// -------------- 游戏进程 -------------------
 	gameStart() {
 		this.status = 1
 		this.playerStatus = 2
 		this.initGameLevel()
 		this.showPage(1)
+		playerData.isFirstTime()
 	},
 	gameRestart() {
 		if (this.status = 2) {
@@ -159,6 +138,8 @@ cc.Class({
 	levelUp() {
 		this.operateDialog(4, 0)
 		this.PD.level++
+		this.PD.money += 20
+		this.UI.updateMoney()
 		playerData.saveData(null, this.PD)
 		this.gameStart()
 	},
@@ -184,10 +165,16 @@ cc.Class({
 		if (this.status == 1 && this.playerStatus == 1) {
 			this.status = 2
 			this.playerStatus = 3
+			playerData.saveData(null, this.PD)
 			this.operateDialog(2, 1)
 		}
 	},
-
+	addAtk() {
+		this.PD.atk++
+		this.PD.money -= 20
+		this.UI.updateMoney()
+		playerData.saveData(null, this.PD)
+	},
 	successPunch() {
 		this.playerStatus = 2
 		let action = cc.moveBy(0.1, 0, window.winSize.height / 2 + this.target.height)

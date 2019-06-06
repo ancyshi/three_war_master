@@ -8,13 +8,13 @@ cc.Class({
   // LIFE-CYCLE CALLBACKS:
 
   // onLoad () {},
-  init(g, data) {
-    this._game = g
+  init(c, data) {
+    this._choosePage = c
     this.data = data
-    this.isHave = g.PD.characters.some(item => {
+    this.isHave = c._game.PD.characters.some(item => {
       item == data.number
     })
-    this.sprite.spriteFrame = g.characterSF[this.data.number]
+    this.sprite.spriteFrame = c.characterSF[this.data.number]
   },
   start() {
 
@@ -28,7 +28,7 @@ cc.Class({
     this.getChildByName('choosebg').active = true
   },
   chooseCharacter() {
-    this._game.switchCharacter(this.data.number, this.sprite.spriteFrame)
+    this._choosePage.switchCharacter(this.data.number, this.sprite.spriteFrame)
   },
   // update (dt) {},
 });
